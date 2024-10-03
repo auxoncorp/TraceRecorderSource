@@ -2275,6 +2275,7 @@ TraceHeapHandle_t xTraceKernelPortGetSystemHeapHandle(void);
 	prvTraceStoreEvent_Handle(PSF_EVENT_TASK_SUSPEND, pxTaskToSuspend)
 
 /* Called on vTaskDelay - note the use of FreeRTOS variable xTicksToDelay */
+#if !defined(TRC_CFG_EXCLUDE_DELAY_EVENTS) || (TRC_CFG_EXCLUDE_DELAY_EVENTS == 0)
 #undef traceTASK_DELAY
 #define traceTASK_DELAY() \
 	prvTraceStoreEvent_Param(PSF_EVENT_TASK_DELAY, xTicksToDelay)
@@ -2292,6 +2293,8 @@ TraceHeapHandle_t xTraceKernelPortGetSystemHeapHandle(void);
 	prvTraceStoreEvent_Param(PSF_EVENT_TASK_DELAY_UNTIL, xTimeToWake)
 
 #endif
+
+#endif /* TRC_CFG_EXCLUDE_DELAY_EVENTS */
 
 #if (TRC_CFG_FREERTOS_VERSION >= TRC_FREERTOS_VERSION_9_0_0)
 
